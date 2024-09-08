@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Segment City Highlighter
 // @namespace    WazeDev
-// @version      2024.09.07.001
+// @version      2024.09.07.002
 // @description  Highlighter to help out with cities on WME road segments
 // @author       MapOMatic
 // @include      /^https:\/\/(www|beta)\.waze\.com\/(?!user\/)(.{2,6}\/)?editor\/?.*$/
@@ -115,7 +115,7 @@
                     isSegmentEdited = true;
                 }
 
-                if (primaryStreetInfo.cityName || !primaryStreetInfo.streetName) {
+                if (primaryStreetInfo.cityName || !primaryStreetInfo.streetName || primaryStreetInfo.ignore) {
                     isAllNoCity = false;
                 }
 
@@ -164,7 +164,7 @@
                     }
                 }
             }
-            if (isAllNoCity) isSegmentEdited = true;
+            if (isAllNoCity && !segment.isNew()) isSegmentEdited = true;
             if (isSegmentEdited) result.affectedSegments.push(segment);
         });
 
